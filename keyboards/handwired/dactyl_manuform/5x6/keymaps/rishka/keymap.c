@@ -49,8 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      RGB_MOD, RGB_HUI, _______, _______, _______, _______,                        _______, _______, _______, _______, _______, _______,
      	RGB_M_SN, RGB_HUD, _______, KC_MS_U, _______, KC_WH_U,                        _______, _______, KC_WH_U, _______, _______, _______,
      RGB_VAI, RGB_SAI, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                        _______, MOUSE_L, KC_WH_D, MOUSE_R, _______, _______,
-     RGB_VAD, RGB_SAD, _______, _______, _______, _______,                        _______, _______, _______, _______, _______, _______,
-                                             _______, _______,            _______, _______,
+     RGB_VAD, RGB_SAD, _______, _______, KC_MPLY, _______,                        _______, KC_MUTE, _______, _______, _______, _______,
+                                             KC_MPRV, KC_MNXT,            KC_VOLU, KC_VOLD,
                                              KC_BTN1, KC_BTN2,            _______, _______,
                                              KC_BTN3, KC_BTN4,            _______, _______,
                                              KC_BTN5, _______,            _______, _______
