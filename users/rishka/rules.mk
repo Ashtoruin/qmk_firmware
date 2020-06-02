@@ -7,3 +7,4 @@ ifeq ($(strip $(PIMORONI_TRACKBALL_ENABLE)), yes)
     SRC += pimoroni_trackball.c
     QUANTUM_LIB_SRC += i2c_master.c
 endif
+

@@ -59,3 +59,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
+#ifdef PIMORONI_TRACKBALL_ENABLE
+void run_trackball_cleanup(void) {
+    if (trackball_is_scrolling()) {
+        trackball_set_rgbw(RGB_CYAN, 0x00);
+    } else if (trackball_get_precision() != 1.0) {
+        trackball_set_rgbw(RGB_GREEN, 0x00);
+    } else {
+        trackball_set_rgbw(RGB_MAGENTA, 0x00);
+    }
+}
+void keyboard_post_init_keymap(void) {
+    // trackball_set_precision(1.5);
+    trackball_set_rgbw(RGB_MAGENTA, 0x00);
+}
+void shutdown_keymap(void) {
+    trackball_set_rgbw(RGB_RED, 0x00);
+}
+#endif
+
+// #ifdef PIMORONI_TRACKBALL_ENABLE
+//         case PM_SCROLL:
+//             trackball_set_scrolling(record->event.pressed);
+//             run_trackball_cleanup();
+//             break;
+//         case PM_PRECISION:
+//             if (record->event.pressed) {
+//                 trackball_set_precision(1.5);
+//             } else {
+//                 trackball_set_precision(1);
+//             }
+//             run_trackball_cleanup();
+//             break;
+// #if     !defined(MOUSEKEY_ENABLE) && defined(POINTING_DEVICE_ENABLE)
+//         case KC_BTN1 ... KC_BTN3:
+//         {
+//             report_mouse_t currentReport = pointing_device_get_report();
+//             if (record->event.pressed) {
+//                 currentReport.buttons |= (1 << (keycode - KC_BTN1));  // this is defined in report.h
+//             } else {
+//                 currentReport.buttons &= ~(1 << (keycode - KC_BTN1));
+//             }
+//             pointing_device_set_report(currentReport);
+//             pointing_device_send();
+//             break;
+//         }
+// #    endif
+// #endif

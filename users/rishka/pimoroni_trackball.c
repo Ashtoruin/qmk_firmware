@@ -13,6 +13,9 @@ static float precisionSpeed = 1;
 #endif
 
 void trackball_set_rgbw(uint8_t red, uint8_t green, uint8_t blue, uint8_t white) {
+    if (!is_keyboard_master()) return;
+
+
     uint8_t data[] = {0x00, red, green, blue, white};
     i2c_transmit(TRACKBALL_WRITE, data, sizeof(data), I2C_TIMEOUT);
 }
@@ -52,6 +55,7 @@ void    trackball_set_scrolling(bool scroll) { scrolling = scroll; }
 __attribute__((weak)) void pointing_device_init(void) { trackball_set_rgbw(0x00,0x00,0x00,0x4F); }
 
 void pointing_device_task(void) {
+    if (!is_keyboard_master()) return;
     uint8_t state[5] = {};
     if (i2c_readReg(TRACKBALL_WRITE, 0x04, state, 5, I2C_TIMEOUT) == I2C_STATUS_SUCCESS) {
         if (scrolling) {
