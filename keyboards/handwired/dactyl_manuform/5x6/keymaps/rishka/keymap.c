@@ -2,12 +2,16 @@
 
 #include QMK_KEYBOARD_H
 #include "rishka.h"
-
 enum layers {
   BASE, // default layer
   WIN, // Switch keys that are needed in windows
   SYMB, // symbols
   MDIA // media keys
+};
+
+enum more_custom_keycodes {
+    PM_SCROLL,
+    PM_PRECISION,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -37,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [SYMB] = LAYOUT_5x6_wrapper(
        KC_F12 , ______________________F_L__________________,                      ______________________F_R__________________, KC_F11,
        _______, _________________SYMBOL_L1_________________,                      _________________SYMBOL_R1_________________, KC_NLCK,
-       _______, _________________SYMBOL_L2_________________,                      _________________SYMBOL_R2_________________, _______,
+       _______, PM_PRECISION, PM_SCROLL, KC_BTN1, KC_BTN2, KC_BTN3,                       _________________SYMBOL_R2_________________, _______,
        _______, _________________SYMBOL_L3_________________,                      _________________SYMBOL_R3_________________, _______,
                                                _______, _______,            KC_P0 , KC_PDOT,
                                                _______, _______,            _______, _______,
@@ -69,7 +73,7 @@ void run_trackball_cleanup(void) {
         trackball_set_rgbw(RGB_MAGENTA, 0x00);
     }
 }
-void keyboard_post_init_keymap(void) {
+void keyboard_post_init_kb(void) {
     // trackball_set_precision(1.5);
     trackball_set_rgbw(RGB_MAGENTA, 0x00);
 }
@@ -78,31 +82,36 @@ void shutdown_keymap(void) {
 }
 #endif
 
-// #ifdef PIMORONI_TRACKBALL_ENABLE
-//         case PM_SCROLL:
-//             trackball_set_scrolling(record->event.pressed);
-//             run_trackball_cleanup();
-//             break;
-//         case PM_PRECISION:
-//             if (record->event.pressed) {
-//                 trackball_set_precision(1.5);
-//             } else {
-//                 trackball_set_precision(1);
-//             }
-//             run_trackball_cleanup();
-//             break;
-// #if     !defined(MOUSEKEY_ENABLE) && defined(POINTING_DEVICE_ENABLE)
-//         case KC_BTN1 ... KC_BTN3:
-//         {
-//             report_mouse_t currentReport = pointing_device_get_report();
-//             if (record->event.pressed) {
-//                 currentReport.buttons |= (1 << (keycode - KC_BTN1));  // this is defined in report.h
-//             } else {
-//                 currentReport.buttons &= ~(1 << (keycode - KC_BTN1));
-//             }
-//             pointing_device_set_report(currentReport);
-//             pointing_device_send();
-//             break;
-//         }
-// #    endif
-// #endif
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+#ifdef PIMORONI_TRACKBALL_ENABLE
+        case PM_SCROLL:
+            trackball_set_scrolling(record->event.pressed);
+            run_trackball_cleanup();
+            break;
+        case PM_PRECISION:
+            if (record->event.pressed) {
+                trackball_set_precision(1.5);
+            } else {
+                trackball_set_precision(1);
+            }
+            run_trackball_cleanup();
+            break;
+#if     !defined(MOUSEKEY_ENABLE) && defined(POINTING_DEVICE_ENABLE)
+        case KC_BTN1 ... KC_BTN3:
+        {
+            report_mouse_t currentReport = pointing_device_get_report();
+            if (record->event.pressed) {
+                currentReport.buttons |= (1 << (keycode - KC_BTN1));  // this is defined in report.h
+            } else {
+                currentReport.buttons &= ~(1 << (keycode - KC_BTN1));
+            }
+            pointing_device_set_report(currentReport);
+            pointing_device_send();
+            break;
+        }
+#    endif
+#endif
+    }
+    return true;
+}
