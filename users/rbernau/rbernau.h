@@ -1,10 +1,5 @@
 #pragma once
 
-#if (!defined(LAYOUT) && defined(KEYMAP))
-#    define LAYOUT KEYMAP
-#endif
-
-#define LAYOUT_65_wrapper(...)                 LAYOUT_65_ansi(__VA_ARGS__)
 
 // Mouse speed setting constant
 #undef MK_MOMENTARY_ACCEL
