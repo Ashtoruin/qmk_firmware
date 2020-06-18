@@ -18,10 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-
 #define USE_I2C
 #define EEPROM_I2C_MB85RC256V
-#define MASTER_RIGHT
+#define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 8191 //32767
+#define DYNAMIC_KEYMAP_LAYER_COUNT 32
+#define PIMORONI_TRACKBALL_SWAP_XY
+#define PIMORONI_TRACKBALL_INVERT_Y
+#define MASTER_LEFT
 // #define MASTER_RIGHT
 //#define EE_HANDS
 // Rows are doubled-up

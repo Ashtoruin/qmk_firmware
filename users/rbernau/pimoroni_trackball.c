@@ -87,10 +87,18 @@ void pointing_device_task(void) {
 
     trackball_check_click(state[4] & (1 << 7), &mouse);
 
+
+#ifdef PIMORONI_TRACKBALL_SWAP_XY
+    update_member(&mouse.x, &y_offset);
+    update_member(&mouse.y, &x_offset);
+    update_member(&mouse.v, &h_offset);
+    update_member(&mouse.h, &v_offset);
+#else
     update_member(&mouse.x, &x_offset);
     update_member(&mouse.y, &y_offset);
     update_member(&mouse.v, &v_offset);
     update_member(&mouse.h, &h_offset);
+#endif
     pointing_device_set_report(mouse);
     pointing_device_send();
 }
