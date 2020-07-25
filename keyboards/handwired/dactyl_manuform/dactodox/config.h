@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "config_common.h"
 
-#define PRODUCT         Dactyl-Manuform (5x7)
-#define PRODUCT_ID      0x3436
+#define PRODUCT         Dactyl-Manuform (Ergodox)
+#define PRODUCT_ID      0x6464 // DD
 
 /* key matrix size */
 // Rows are doubled-up

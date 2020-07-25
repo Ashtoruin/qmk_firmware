@@ -1,6 +1,5 @@
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
-Copyright 2015 Jack Humbert
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,24 +15,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 #pragma once
 
-#include "config_common.h"
-
-#define PRODUCT         Dactyl-Manuform (5x7)
-#define PRODUCT_ID      0x3436
-
-/* key matrix size */
+#define USE_I2C
+#define EEPROM_I2C_MB85RC256V
+#define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 8191 //32767
+#define DYNAMIC_KEYMAP_LAYER_COUNT 32
+#define PIMORONI_TRACKBALL_SWAP_XY
+#define PIMORONI_TRACKBALL_INVERT_Y
+#define MASTER_LEFT
+#define TAPPING_TOGGLE 2
+// #define MASTER_RIGHT
+//#define EE_HANDS
 // Rows are doubled-up
-#define MATRIX_ROWS 12
-#define MATRIX_COLS 7
-
-// wiring of each half
-#define MATRIX_ROW_PINS { D4, C6, D7, E6, B4, B5 }
-#define MATRIX_COL_PINS { F5, F6, F7, B1, B3, B2, B6 }
-
-#define DIODE_DIRECTION COL2ROW
-
-// WS2812 RGB LED strip input and number of LEDs
-#define RGB_DI_PIN D3
-#define RGBLED_NUM 12

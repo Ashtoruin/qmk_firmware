@@ -7,6 +7,7 @@ static int16_t y_offset       = 0;
 static int16_t h_offset       = 0;
 static int16_t v_offset       = 0;
 static float precisionSpeed = 1;
+static bool update_scroll = true;
 
 #ifndef I2C_TIMEOUT
 #    define I2C_TIMEOUT 100
@@ -40,10 +41,12 @@ void update_member(int8_t* member, int16_t* offset) {
 }
 
 __attribute__((weak)) void trackball_check_click(bool pressed, report_mouse_t* mouse) {
-    if (pressed) {
-        mouse->buttons |= MOUSE_BTN1;
-    } else {
-        mouse->buttons &= ~MOUSE_BTN1;
+    if (pressed & update_scroll) {
+        trackball_set_scrolling(!trackball_is_scrolling()
+        );
+        update_scroll = false;
+    } else if (!pressed) {
+        update_scroll = true;
     }
 }
 
@@ -58,16 +61,16 @@ void pointing_device_task(void) {
     if (!is_keyboard_master()) return;
     uint8_t state[5] = {};
     if (i2c_readReg(TRACKBALL_WRITE, 0x04, state, 5, I2C_TIMEOUT) == I2C_STATUS_SUCCESS) {
-        if (scrolling) {
+        if (trackball_is_scrolling()) {
 #ifdef PIMORONI_TRACKBALL_INVERT_X
-            h_offset += mouse_offset(state[2], state[3], 1);
-#else
             h_offset -= mouse_offset(state[2], state[3], 1);
+#else
+            h_offset += mouse_offset(state[2], state[3], 1);
 #endif
 #ifdef PIMORONI_TRACKBALL_INVERT_Y
-            v_offset += mouse_offset(state[1], state[0], 1);
-#else
             v_offset -= mouse_offset(state[1], state[0], 1);
+#else
+            v_offset += mouse_offset(state[1], state[0], 1);
 #endif
         } else {
 #ifdef PIMORONI_TRACKBALL_INVERT_X
