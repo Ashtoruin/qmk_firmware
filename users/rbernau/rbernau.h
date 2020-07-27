@@ -87,6 +87,8 @@
 #    include "pimoroni_trackball.h"
 #endif
 
-#if defined(ENCODER_BOX_ENABLE)
-#    include "encoder_box.h"
-#endif
+// #if defined(ENCODER_BOX_ENABLE)
+// #define ENCODER_ENABLE
+// #define OLED_DRIVER_ENABLE
+// #    include "encoder_box.h"
+// #endif
