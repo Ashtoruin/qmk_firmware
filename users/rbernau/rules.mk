@@ -1,5 +1,5 @@
 
-SRC += rishka.c
+SRC += rbernau.c
 
 ifeq ($(strip $(PIMORONI_TRACKBALL_ENABLE)), yes)
     POINTING_DEVICE_ENABLE := yes
