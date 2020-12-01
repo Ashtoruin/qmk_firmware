@@ -6,5 +6,3 @@ EEPROM_DRIVER = i2c
 VIA_ENABLE = yes
 LTO_ENABLE = yes
 COMMAND_ENABLE = no
-EXTRAKEY_ENABLE = no       # Audio control and System control(+450)
-AUDIO_ENABLE = no
